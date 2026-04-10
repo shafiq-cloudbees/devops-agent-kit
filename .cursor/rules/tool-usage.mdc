@@ -1,0 +1,76 @@
+---
+description: MCP tool routing — when to use which tool
+globs:
+alwaysApply: true
+---
+
+# MCP Tool Routing
+
+## CloudBees Unify — Component Discovery
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Find a specific component | `components_search` | Search by repo or app name |
+| List all components | `components_list` | Use when user says "all" or "org" |
+
+## CloudBees Unify — CI/CD Analysis
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Recent runs | `runs_list` | Set limit param; filter out code_scan workflows |
+| Jobs in a run | `automation_jobs_list` | Shows job-level pass/fail |
+| Step logs | `logs_list` | May 500 — fall back gracefully |
+| Workflow YAML | `workflow_get_content` | Read to understand step purposes |
+| All workflows | `workflow_list` | Find CI and release workflows |
+| Update workflow | `workflow_update_content` | **Write** — requires user confirmation |
+| Trigger workflow | `workflow_trigger` | **Write** — requires user confirmation |
+
+## CloudBees Unify — Security
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Org-wide issues | `security_issues_all_get` | All open findings |
+| Component branches | `branches_list` | Find default branch first |
+| Severity breakdown | `security_findings_summary_get` | Per component + branch |
+| Detailed findings | `security_issues_open_get` | Per component + branch |
+| Org reports | `organizations_suborg_report` | Widgets: s1, s2, s6, s8 (s4/s5 may be empty) |
+
+## CloudBees Unify — Controllers
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Find controllers | `controllers_list` | Jenkins instances |
+| System info | `controllers_data_get(ci2)` | Version, plugins, nodes |
+| System health | `controllers_data_get(ci3)` | Disk, threads, plugins |
+| Runs overview | `controllers_data_get(ci4)` | Active, queued, wait times |
+| Plugin details | `report_drilldown_get(pluginsInfo)` | Plugin health |
+
+## CloudBees Unify — Feature Flags
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Find apps | `flags_applications_list` | Flag application discovery |
+| List flags | `flags_list` | All flags in an app |
+| Find flag by name | `flags_get_by_name` | Specific flag lookup |
+| List environments | `flags_environments_list` | Staging, production, etc. |
+| Check state | `flags_configurations_list` | Current flag state per env |
+| Enable/disable | `flags_configuration_state_update` | **Write** — requires confirmation |
+| Create flag | `flags_add` | **Write** — requires confirmation |
+
+## Jira
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Create ticket | `mcp__mcp-atlassian__jira_create_issue` | **Write** — show preview first |
+
+## Slack
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| Post message | `mcp__slack__slack_post_message` | **Write** — confirm channel first |
+
+## GitHub
+
+| Goal | Tool | Notes |
+|------|------|-------|
+| PR comments | GitHub MCP tools | Add review comments with analysis |

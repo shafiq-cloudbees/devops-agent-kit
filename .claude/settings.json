@@ -1,0 +1,48 @@
+{
+  "mcpServers": {
+    "cloudbees-unify": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@cloudbees/unify-mcp-server"],
+      "env": {
+        "CLOUDBEES_API_TOKEN": "${CLOUDBEES_API_TOKEN}",
+        "CLOUDBEES_ORG_ID": "${CLOUDBEES_ORG_ID}"
+      }
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "jira": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "${JIRA_URL}",
+        "JIRA_USERNAME": "${JIRA_USERNAME}",
+        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+      }
+    },
+    "slack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@zencoderai/slack-mcp-server"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Read", "Grep", "Glob", "WebFetch",
+      "Bash(git *)", "Bash(npm *)",
+      "mcp__cloudbees-unify__*",
+      "mcp__mcp-atlassian__*",
+      "mcp__slack__*"
+    ],
+    "deny": [
+      "Bash(rm -rf *)", "Bash(sudo *)"
+    ]
+  }
+}
