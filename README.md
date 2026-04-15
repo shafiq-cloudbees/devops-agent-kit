@@ -39,14 +39,16 @@ claude .
 | `/ci-health` | CI health score with controller analytics |
 | `/file-ticket` | Create a Jira ticket from any finding |
 
-## MCP servers
+## Connections
 
-| Server | What it provides |
-|--------|-----------------|
-| [CloudBees Unify](https://www.cloudbees.com/) | CI runs, logs, components, security, analytics, workflows, flags |
-| [GitHub](https://github.com/) | PRs, issues, code search, Actions status |
-| [Jira](https://www.atlassian.com/software/jira) | Issue creation and management |
-| [Slack](https://slack.com/) | Team notifications |
+| Tool | How | What it provides |
+|------|-----|-----------------|
+| [CloudBees Unify](https://www.cloudbees.com/) | MCP (Docker) | CI runs, logs, components, security, analytics, workflows, flags |
+| [Jira](https://www.atlassian.com/software/jira) | MCP (uvx) | Issue creation and management |
+| [Slack](https://slack.com/) | MCP (npx) | Team notifications |
+| [GitHub](https://github.com/) | `gh` CLI | PRs, issues, code search, Actions status |
+
+Three MCP servers + one CLI tool. The agent handles both seamlessly — use MCP where servers exist, CLI where they don't.
 
 ## Works with
 

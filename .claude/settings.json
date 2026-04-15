@@ -2,16 +2,15 @@
   "mcpServers": {
     "cloudbees-unify": {
       "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@cloudbees/unify-mcp-server"],
-      "env": {
-        "CLOUDBEES_API_TOKEN": "${CLOUDBEES_API_TOKEN}",
-        "CLOUDBEES_ORG_ID": "${CLOUDBEES_ORG_ID}"
-      }
-    },
-    "github": {
-      "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/"
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "CLOUDBEES_API_TOKEN",
+        "cloudbees/unify-mcp-server:latest",
+        "stdio",
+        "--credential=CLOUDBEES_API_TOKEN",
+        "--organization-id=${CLOUDBEES_ORG_ID}"
+      ]
     },
     "jira": {
       "type": "stdio",
@@ -36,9 +35,9 @@
   "permissions": {
     "allow": [
       "Read", "Grep", "Glob", "WebFetch",
-      "Bash(git *)", "Bash(npm *)",
+      "Bash(git *)", "Bash(npm *)", "Bash(gh *)",
       "mcp__cloudbees-unify__*",
-      "mcp__mcp-atlassian__*",
+      "mcp__jira__*",
       "mcp__slack__*"
     ],
     "deny": [

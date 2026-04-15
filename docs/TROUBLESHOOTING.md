@@ -4,13 +4,25 @@
 
 ### CloudBees Unify MCP server won't start
 
-**Symptom:** `npx -y @cloudbees/unify-mcp-server` fails or times out.
+**Symptom:** The CloudBees Unify tools don't appear in the agent, or you see connection errors.
 
 **Fixes:**
-- Verify Node.js v18+: `node --version`
-- Check that `CLOUDBEES_API_TOKEN` and `CLOUDBEES_ORG_ID` are set
-- Test the token: the agent will show an auth error if the token is invalid or expired
+- Verify Docker is running: `docker ps`
+- Pull the latest image: `docker pull cloudbees/unify-mcp-server:latest`
+- Check that `CLOUDBEES_API_TOKEN` and `CLOUDBEES_ORG_ID` are set in your `.env` or `.mcp.json`
 - If behind a corporate proxy, set `HTTPS_PROXY` environment variable
+
+> **Note:** The CloudBees Unify MCP server runs via Docker, not npm. The `@cloudbees/unify-mcp-server` npm package is not publicly available. If you see `npm error 404 Not Found`, switch to the Docker-based configuration in `.mcp.json`.
+
+### CloudBees API token expired (401 Unauthorized)
+
+**Symptom:** `user_whoami` or `components_list` returns `401 serviceEndpointListServicesUnauthorized`.
+
+**Fixes:**
+- Generate a fresh token: CloudBees Unify > User Settings > API Tokens
+- Test it directly: `curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer YOUR_TOKEN" https://api.cloudbees.io/v2/organizations`
+- Update the token in `.mcp.json` (in the `args` array for the Docker command) and restart the agent
+- Tokens expire periodically — if your agent was working yesterday but not today, this is the most likely cause
 
 ### Jira MCP server won't start
 
@@ -31,14 +43,14 @@
 - Ensure the Slack app has required scopes: `chat:write`, `channels:read`, `channels:history`
 - `SLACK_TEAM_ID` is the workspace ID (found in Slack app settings)
 
-### GitHub MCP not available
+### GitHub CLI not working
 
-**Symptom:** GitHub tools not showing up in the agent.
+**Symptom:** Agent can't check GitHub PRs or Actions runs.
 
 **Fixes:**
-- In Claude Code: the GitHub MCP uses the HTTP transport to `https://api.githubcopilot.com/mcp/` — ensure GitHub Copilot is active
-- In Cursor: the `mcp-remote` bridge is used — ensure `npx -y mcp-remote` works
-- For standalone use: authenticate with `gh auth login`
+- Authenticate: `gh auth login`
+- Verify: `gh auth status` should show you're logged in
+- The agent uses the `gh` CLI directly (not an MCP server) for GitHub operations — this is by design
 
 ## Agent Behavior Issues
 

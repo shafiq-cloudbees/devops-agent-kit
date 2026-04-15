@@ -1,16 +1,15 @@
 {
   "mcpServers": {
     "cloudbees-unify": {
-      "command": "npx",
-      "args": ["-y", "@cloudbees/unify-mcp-server"],
-      "env": {
-        "CLOUDBEES_API_TOKEN": "${env:CLOUDBEES_API_TOKEN}",
-        "CLOUDBEES_ORG_ID": "${env:CLOUDBEES_ORG_ID}"
-      }
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://api.githubcopilot.com/mcp/"]
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "CLOUDBEES_API_TOKEN",
+        "cloudbees/unify-mcp-server:latest",
+        "stdio",
+        "--credential=CLOUDBEES_API_TOKEN",
+        "--organization-id=${CLOUDBEES_ORG_ID}"
+      ]
     },
     "jira": {
       "command": "uvx",

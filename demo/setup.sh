@@ -18,13 +18,13 @@ check_env() {
   local required="${2:-true}"
   if [ -n "${!var_name:-}" ]; then
     echo -e "  ${GREEN}✓${NC} $var_name is set"
-    ((PASS++))
+    PASS=$((PASS + 1))
   elif [ "$required" = "true" ]; then
     echo -e "  ${RED}✗${NC} $var_name is not set (required)"
-    ((FAIL++))
+    FAIL=$((FAIL + 1))
   else
     echo -e "  ${YELLOW}?${NC} $var_name is not set (optional)"
-    ((WARN++))
+    WARN=$((WARN + 1))
   fi
 }
 
@@ -33,10 +33,10 @@ check_command() {
   local install_hint="$2"
   if command -v "$cmd" &> /dev/null; then
     echo -e "  ${GREEN}✓${NC} $cmd is installed ($(command -v "$cmd"))"
-    ((PASS++))
+    PASS=$((PASS + 1))
   else
     echo -e "  ${RED}✗${NC} $cmd is not installed — $install_hint"
-    ((FAIL++))
+    FAIL=$((FAIL + 1))
   fi
 }
 
@@ -85,14 +85,14 @@ echo "─────────"
 if command -v gh &> /dev/null; then
   if gh auth status &> /dev/null; then
     echo -e "  ${GREEN}✓${NC} GitHub CLI authenticated"
-    ((PASS++))
+    PASS=$((PASS + 1))
   else
     echo -e "  ${YELLOW}?${NC} GitHub CLI installed but not authenticated — run: gh auth login"
-    ((WARN++))
+    WARN=$((WARN + 1))
   fi
 else
   echo -e "  ${YELLOW}?${NC} GitHub CLI not installed — GitHub MCP uses Copilot HTTP transport"
-  ((WARN++))
+  WARN=$((WARN + 1))
 fi
 echo ""
 
