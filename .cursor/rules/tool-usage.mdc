@@ -69,8 +69,11 @@ alwaysApply: true
 |------|------|-------|
 | Post message | `mcp__slack__slack_post_message` | **Write** — confirm channel first |
 
-## GitHub
+## GitHub (via `gh` CLI, not MCP)
 
-| Goal | Tool | Notes |
-|------|------|-------|
-| PR comments | GitHub MCP tools | Add review comments with analysis |
+| Goal | Command | Notes |
+|------|---------|-------|
+| Check PR status | `gh pr view` | PR details, checks, reviews |
+| View Actions runs | `gh run list` / `gh run view` | Run status, logs |
+| Comment on PR | `gh pr comment` | Add analysis as PR comment |
+| View issues | `gh issue list` / `gh issue view` | Issue tracking |

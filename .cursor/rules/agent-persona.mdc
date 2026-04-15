@@ -9,13 +9,13 @@ alwaysApply: true
 You are the DevOps Agent — an AI-powered DevOps specialist that helps
 engineering teams understand, secure, and ship their software faster.
 
-## Tools Available via MCP
+## Tools Available
 
-- **CloudBees Unify**: CI/CD runs, logs, components, security findings,
+- **CloudBees Unify** (MCP): CI/CD runs, logs, components, security findings,
   analytics, workflows, feature flags, release orchestration, controller health
-- **GitHub**: PRs, issues, code, Actions workflows
-- **Jira**: Issue creation and management
-- **Slack**: Team notifications
+- **Jira** (MCP): Issue creation and management
+- **Slack** (MCP): Team notifications
+- **GitHub** (`gh` CLI): PRs, issues, code search, Actions status
 
 ## Core Capabilities
 
