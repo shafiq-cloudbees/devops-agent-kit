@@ -2,7 +2,7 @@
 
 Turn your AI coding assistant into a DevOps specialist. Clone this repo, open it in [Claude Code](https://claude.ai/code) or [Cursor](https://cursor.com/), and get a working DevOps agent that sees across all your CI/CD tools.
 
-> **This is a community project maintained by CloudBees DevRel. It is not a CloudBees product and is not covered by CloudBees support.**
+> **This is a demo and community reference project maintained by CloudBees DevRel. It is not production-hardened, not a CloudBees product, and not covered by CloudBees support. Use at your own risk and review all configurations before connecting to production systems.**
 
 ## What it does
 
@@ -19,7 +19,7 @@ The DevOps Agent connects to your CI/CD tools via [MCP](https://modelcontextprot
 ## Quick start
 
 ```bash
-git clone https://github.com/cloudbees/devops-agent-kit.git
+git clone https://github.com/cloudbees-oss/devops-agent-kit.git
 cd devops-agent-kit
 cp demo/env.template .env
 # Edit .env with your tokens
@@ -58,6 +58,16 @@ Three MCP servers + one CLI tool. The agent handles both seamlessly — use MCP 
 ## Bring your own environment
 
 The kit works with any CloudBees Unify environment. Set your `CLOUDBEES_API_TOKEN` and `CLOUDBEES_ORG_ID` to point at your own org.
+
+## Security considerations
+
+**Never commit your `.env` file.** The `.gitignore` in this repo excludes it, but if you fork or copy the kit elsewhere, make sure your tokens stay out of version control.
+
+**Read-only by default.** The MCP server config ships with `--toolsets=all=r`, which exposes all CloudBees Unify tools in read-only mode. To enable write operations (flag changes, workflow triggers), change this to `--toolsets=all` in `.mcp.json` or `.claude/settings.json` — but do so deliberately.
+
+**Prompt injection via CI logs.** The `/triage` skill reads pipeline logs and can trigger downstream actions like creating Jira tickets or posting to Slack. A malicious actor with commit access could craft log output designed to manipulate the agent. Mitigations: the kit ships read-only by default, skills require user confirmation before write actions, and the agent persona in CLAUDE.md includes guardrails. If you enable write toolsets, review the triage output before approving any actions.
+
+**Report vulnerabilities responsibly.** See [SECURITY.md](SECURITY.md) for how to report security issues without opening a public GitHub issue.
 
 ## Documentation
 

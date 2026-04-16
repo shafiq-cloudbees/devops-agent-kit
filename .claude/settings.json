@@ -9,7 +9,8 @@
         "cloudbees/unify-mcp-server:latest",
         "stdio",
         "--credential=CLOUDBEES_API_TOKEN",
-        "--organization-id=${CLOUDBEES_ORG_ID}"
+        "--organization-id=${CLOUDBEES_ORG_ID}",
+        "--toolsets=all=r"
       ]
     },
     "jira": {

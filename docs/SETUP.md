@@ -13,7 +13,7 @@
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/cloudbees/devops-agent-kit.git
+git clone https://github.com/cloudbees-oss/devops-agent-kit.git
 cd devops-agent-kit
 
 # 2. Copy the env template and fill in your values
@@ -47,7 +47,7 @@ CloudBees Unify is the core connection. All seven skills depend on it.
 **Step 2: Find your Organization ID**
 
 1. In CloudBees Unify, click **Admin Settings** (top right) > **Organizational Profile**
-2. Copy the Organization ID (a UUID like `961440a6-ea9c-4c1a-a130-a529559e79b0`)
+2. Copy the Organization ID (a UUID like `a1b2c3d4-e5f6-7890-abcd-ef1234567890`)
 
 **Step 3: Add to `.env`**
 
@@ -64,7 +64,7 @@ The CloudBees Unify MCP server runs as a Docker container:
 docker pull cloudbees/unify-mcp-server:latest
 ```
 
-The `.mcp.json` config uses `docker run` to start the server in stdio mode. The server accepts these flags:
+The `.mcp.json` config uses `docker run` to start the server in stdio mode. By default, the kit ships with `--toolsets=all=r` (read-only). To enable write operations (flag changes, workflow triggers), change this to `--toolsets=all`. The server accepts these flags:
 
 ```bash
 docker run --rm -i \
@@ -173,7 +173,7 @@ The agent calls `gh` for GitHub operations like checking PR status, viewing Acti
 
 The kit works with any CloudBees Unify environment. Set `CLOUDBEES_API_TOKEN` and `CLOUDBEES_ORG_ID` to point at your own org and the agent will work against your real data.
 
-For read-only access (recommended when exploring a production org), add `--toolsets=all=r` to the Docker args in `.mcp.json`. This exposes all tools but prevents any write operations (no flag changes, no workflow triggers).
+The kit ships read-only by default (`--toolsets=all=r`). To enable write operations (flag changes, workflow triggers), change this to `--toolsets=all` in `.mcp.json` or `.claude/settings.json`.
 
 ## Troubleshooting
 

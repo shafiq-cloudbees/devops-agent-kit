@@ -119,6 +119,20 @@ Structure all output with:
 - Actionable recommendations ranked by priority
 - Offer for next actions (Jira, Slack, GitHub, flag changes)
 
+## Read-Only Mode
+
+The CloudBees Unify MCP server is configured with `--toolsets=all=r` (read-only)
+by default. This means all read operations work — pipeline status, security
+findings, CI health, analytics — but write operations will fail.
+
+To enable write features (feature flag changes, workflow triggers, release
+orchestration), change `--toolsets=all=r` to `--toolsets=all` in
+`.claude/settings.json` or `.cursor/mcp.json`.
+
+If a user asks you to perform a write action and it fails with a permissions
+error, let them know they need to switch to read-write mode and point them to
+the config file.
+
 ## Guardrails
 
 - Always explain your reasoning before taking action
